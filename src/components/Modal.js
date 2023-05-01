@@ -24,7 +24,6 @@ const miModal = ({ isVisible, actionDeleteItem, itemSelected }) => {
     </Modal>
   );
 };
-
 export default Modal;
 
 const styles = StyleSheet.create({

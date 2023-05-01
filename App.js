@@ -20,13 +20,13 @@ export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
   const [cupo, setCupo] = useState(10);
 
-
   const onHandleChangeText = text => {
     setTextItem(text);
     console.log(text);
   };
 
   const addItem = () => {
+    console.log("aqui agregamos el item", textItem);
     setList(prevState => [
       ...prevState,
       { name: textItem, id: Math.random().toString() },
