@@ -2,14 +2,14 @@ import {
   StyleSheet,
   Text,
   View,
-  Modal as NewModal,
+  Modal,
   Button,
 } from "react-native";
 import React from "react";
 
-const Modal = ({ isVisible, actionDeleteItem, itemSelected }) => {
+const miModal = ({ isVisible, actionDeleteItem, itemSelected }) => {
   return (
-    <NewModal visible={isVisible} animationType="fade" transparent={true}>
+    <Modal visible={isVisible} animationType="fade" transparent={true}>
       <View style={styles.modalContainer}>
         <View>
           <Text>Estas seguro que desas borrar este elemento?</Text>
@@ -21,10 +21,9 @@ const Modal = ({ isVisible, actionDeleteItem, itemSelected }) => {
           />
         </View>
       </View>
-    </NewModal>
+    </Modal>
   );
 };
-
 export default Modal;
 
 const styles = StyleSheet.create({

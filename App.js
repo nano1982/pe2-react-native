@@ -5,16 +5,20 @@ import {
   Text,
   TextInput,
   View,
+  Modal,
+  ImageBackground
 } from "react-native";
 
 import { useState } from "react";
-import Modal from "./src/components/Modal";
+import React from "react";
+
 
 export default function App() {
   const [textItem, setTextItem] = useState("");
   const [list, setList] = useState([]);
   const [itemSelected, setItemSelected] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+  const [cupo, setCupo] = useState(10);
 
   const onHandleChangeText = text => {
     setTextItem(text);
@@ -28,21 +32,33 @@ export default function App() {
       { name: textItem, id: Math.random().toString() },
     ]);
     setTextItem("");
+    if (cupo < 10) {
+      setCupo(prevState => prevState + 1)
+    }
+    else
+    {
+      setCupo(10)
+    }
   };
 
   const onHandleModal = item => {
-    console.log("en esta funcion seteo el item y abro el modal");
     setItemSelected(item);
     setModalVisible(true);
   };
 
   const onHandleDelete = item => {
-    console.log("eliminar este item", item);
     setList(prevState =>
       prevState.filter(element => element.name !== item.name)
     );
     setModalVisible(false);
+    if (cupo > 0) {
+      setCupo(prevState => prevState -1)
+    }
+    else {
+      setCupo(0)
+    }
   };
+
 
   const renderItem = ({ item }) => (
     <View style={styles.renderItemStyle}>
@@ -53,16 +69,19 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('./src/images/bgi.jpg')} resizeMode="cover" style={styles.image}></ImageBackground>
       <View style={styles.inputContainer}>
-        <Text style={styles.titleContainer}>Shopping List</Text>
+        <Text style={styles.titleContainer}>Pilates Le Style</Text>
         <View style={styles.addItemContainer}>
           <TextInput
-            placeholder="elemento de la lista"
+            placeholder="Ingrese un nuevo alumno"
             style={styles.input}
             onChangeText={onHandleChangeText}
             value={textItem}
           />
-          <Button title="Presiona aqui" onPress={addItem} />
+          <Button title="Agregar" onPress={addItem} />
+          <Text>Máximo permitido de alumnos: 10</Text>
+          <Text>Alumnos disponibles: {cupo}</Text>
         </View>
       </View>
       <View style={styles.listContainer}>
@@ -85,6 +104,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#E7EAF2",
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center'
   },
   inputContainer: {
     height: 200,
